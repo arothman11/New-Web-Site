@@ -26,6 +26,7 @@
     <?php
 
         require 'database.php';
+        session_start();
 
         // Use a prepared statement
         $stmt = $mysqli->prepare("SELECT COUNT(*), username, hashed_password FROM users WHERE username=?");
@@ -37,7 +38,6 @@
 
         // Bind the results
         $stmt->bind_result($cnt, $user_id, $pwd_hash);
-        echo $pwd_hash;
         
         $stmt->fetch();
 

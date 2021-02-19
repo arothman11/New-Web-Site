@@ -23,6 +23,27 @@
                 echo "<p>Invalid username</p>";
                 exit;
             }
+            
+            $stmt1 = $mysqli->prepare("SELECT COUNT(*), username FROM users WHERE username=?");
+
+            // Bind the parameter
+            $stmt1->bind_param('s', $newUsername);
+            $stmt1->execute();
+    
+            // Bind the results
+            $stmt1->bind_result($cnt, $user_id);
+    
+            
+            $stmt1->fetch();
+
+            if($cnt == 1){
+                echo "<p>Username already taken. Please try again.</p>";
+                $stmt1->close();
+                exit;
+            }
+            
+            $stmt1->close();
+
         }
         $newPassword = $_POST['newPassword'];
         if (!empty($_POST)) {

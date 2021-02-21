@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Module 3 Group</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
     <div id="login">
@@ -47,6 +47,7 @@
         if($cnt == 1 && password_verify($pwd_guess, $pwd_hash)){
             // Login succeeded!
             $_SESSION['user_id'] = $user_id;
+            $_SESSION['token'] = bin2hex(openssl_random_pseudo_bytes(32));
             header("Location: main.php");
             // Redirect to your target page
         } else if (!empty($_POST)){

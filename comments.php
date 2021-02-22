@@ -7,7 +7,7 @@
 </head>
 <body>
     //form for logging out
-    <h1>Comments<h1>
+    <h1>Comments</h1>
     <form action="logout.php" method="Post" id="logout">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <button type="submit" id="logout-button">Log Out</button>

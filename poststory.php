@@ -8,8 +8,10 @@
 <body>
     <h1> Upload Your Story Here! </h1>
     <?php
+        //make sure to start the session before sending the token
         session_start();
     ?>
+    //form to post a story
     <form action="poststory2.php" method="Post" id="uploadstory">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <label for="title">Title:</label>

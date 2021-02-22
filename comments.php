@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
+    //form for logging out
     <h1>Comments<h1>
     <form action="logout.php" method="Post" id="logout">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
@@ -21,18 +22,23 @@
     $user_id = $_SESSION['user_id'];
     $user_id = htmlspecialchars($user_id);
 
-    if( !preg_match('/^[\w_\-]+$/', $user_id) ){
+    //making sure the user is actually signed in and username makes sense
+    if( !preg_match('/^[\w_\-]+$/', $user_id) ){ 
         echo "Invalid username";
         exit;
     }
 
+    //getting variablees from form
     $posted_story_username = $_POST['postusername'];
     $posted_story_title = $_POST['titledata'];
+    $posted_story_username = htmlentities($posted_story_username);
+    $posted_story_title = htmlentities($posted_story_title);
 
     $sestok =$_SESSION['token'];
 
     echo "<h2>Story Title: $posted_story_title </h2>";
             echo "<p>Posted By: $posted_story_username </p>";
+            //form for adding comments
             echo 
                 "<form action='postcomment.php' method='Post' id='postcomment'>
                     <input type='hidden' name='story_username' value='$posted_story_username' />
@@ -62,6 +68,7 @@
     
     $int =0;
 
+     //fetching all results
     while($stmt->fetch()){
 
         if ($int == 0) {
@@ -74,7 +81,7 @@
         echo $comment;
 
         if($user_id == $your_username){
-            
+            //form for editing comments
             echo
                 "<form action='editcomment.php' method='Post'>
                     <input type='hidden' name='story_username' value='$story_username' />
@@ -84,7 +91,7 @@
                     
                     <button type='submit' name='editbtn' class='editbtn'>Edit Comment</button>
                 </form>";
-            
+            //form for deleting comments
             echo
                 "<form action='deletecomment.php' method='Post'>
                     <input type='hidden' name='story_username' value='$story_username' />
@@ -103,7 +110,8 @@
     }
     
     echo "</ul>";
-
+    
+      //form to go back to main
     echo '
              <form action="main.php" method="Post">
                  <button type="submit">Return to Main Page</button>

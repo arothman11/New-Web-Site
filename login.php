@@ -7,6 +7,8 @@
 <body>
     <div id="login">
     <h1>Log In</h1>
+    
+    //form for logging in
     <p>Please enter your username in the text field below.</p>
     <form action="login.php" method="POST">
         <label for="username">Username</label>
@@ -18,6 +20,8 @@
         <input type="submit">
    </form>
    </div>
+    
+    //button to create a new user
     <form action="newUser.php">
         <label for="new">Don't have an account?</label>
         <button name="new" id="new">Create New Account</button>

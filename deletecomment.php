@@ -25,10 +25,8 @@
     $your_username = $_SESSION['user_id'];
     
     //htmlentities
-    $story_username = htmlentities("story_username");
-    $story_title = htmlentities("story_title");
-    $comment = htmlentities("comment");
-    $your_username = htmlentities('user_id');
+
+
 
     //checking username
     if( !preg_match('/^[\w_\-]+$/', $your_username) ){

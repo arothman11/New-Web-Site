@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="stylesheet.css">
 </head>
 <body>
-    //form to create a new user
+    <!-- //form to create a new user -->
     <form action="newUser.php" method="Post">
         <label for="newUsername">Username</label>
         <input type="text" name="newUsername" id="newUsername">

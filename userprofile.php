@@ -20,8 +20,6 @@
     
     //getting data from form
      $userprofile = $_POST['username'];
-    //htmlentities
-    $userprofile = htmlentities('username');
     
      echo "<h1>Welcome to $userprofile 's profile</h1>";
 

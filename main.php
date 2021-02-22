@@ -8,16 +8,16 @@
 <body>
     <h1>Welcome To Your News Site</h1>
         
-     //logout button
+     <!-- //logout button -->
     <form action="logout.php" method="Post" id="logout">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <button type="submit" id="logout-button">Log Out</button>
     </form>
 
-    //form to post a story
+    <!-- //form to post a story -->
     <form action="poststory.php" method="Post" id="poststory">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
-        <button type="submit" id="logout-button">Post Story</button>
+        <button type="submit">Post Story</button>
     </form>
 
 

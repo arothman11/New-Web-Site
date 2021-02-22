@@ -13,11 +13,7 @@
     $token = $_SESSION['token'];
     $username = $_SESSION['user_id'];
 
-    //html entities
-    $title = htmlentities("titledata");
-    $body = htmlentities("bodydata");
-    $link = htmlentities("linkdata");
-    $username = htmlentities('user_id');
+
 
     //check username
     if( !preg_match('/^[\w_\-]+$/', $username) ){

@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>Welcome To Your News Site<h1>
+    <h1>Welcome To Your News Site</h1>
         
      //logout button
     <form action="logout.php" method="Post" id="logout">

@@ -3,6 +3,7 @@
 <head>
     <title>Module 3 Group</title>
     <link rel="stylesheet" href="stylesheet.css">
+    <meta charset="UTF-8">
 </head>
 <body>
 <?php
@@ -17,14 +18,19 @@
         die("Request forgery detected");
     }
 
+    if( !preg_match('/^[\w_\-]+$/', $user_id) ){
+        echo "Invalid username";
+        exit;
+    }
+
     $story_username = $_POST['story_username'];
     $story_title = $_POST['story_title'];
     $comment = $_POST['comment'];
 
-    echo $story_username;
-    echo $story_title;
-    echo $comment;
-
+    $story_username = htmlentities($story_username);
+    $story_title = htmlentities($story_title);
+    $comment = htmlentities($comment);
+    
  
     $stmt = $mysqli->prepare("insert into comments (story_username, your_username, story_title, comment) values (?, ?, ?, ?)");
     if(!$stmt){
@@ -38,7 +44,11 @@
          
     $stmt->close();
 
-    header("Location: comments.php");
+    echo "<p>Comment Successfully Posted!</p>";
+    echo '
+             <form action="main.php" method="Post">
+                 <button type="submit">Return to Main Page</button>
+             </form>';
 
 ?>
 </body>

@@ -11,6 +11,16 @@
          $body = $_POST['body'];
          $link = $_POST['link'];
 
+         $username = htmlentities($username);
+         $title = htmlentities($title);
+         $body = htmlentities($body);
+         $link = htmlentities($link);
+
+         if( !preg_match('/^[\w_\-]+$/', $username) ){
+            echo "Invalid username";
+            exit;
+        }
+
  
          $stmt = $mysqli->prepare("insert into stories (username, title, body, link) values (?, ?, ?, ?)");
          if(!$stmt){

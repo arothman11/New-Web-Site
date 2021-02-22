@@ -3,6 +3,7 @@
 <head>
     <title>Module 3 Group</title>
     <link rel="stylesheet" href="stylesheet.css">
+    <meta charset="UTF-8">
 </head>
 <body>
     <h1> Upload Your Story Here! </h1>

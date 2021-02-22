@@ -6,45 +6,27 @@
     <meta charset="UTF-8">
 </head>
 <body>
-    <h1>Welcome To Your News Site<h1>
-    <form action="logout.php" method="Post" id="logout">
-        <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
-        <button type="submit" id="logout-button">Log Out</button>
-    </form>
-
-    
-    <form action="poststory.php" method="Post" id="poststory">
-        <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
-        <button type="submit" id="logout-button">Post Story</button>
-    </form>
-
 
 <?php
-    require 'database.php';
-    session_start();
-
-    $user_id = (string)$_SESSION['user_id'];
-    $user_id = htmlspecialchars($user_id);
-
-    if( !preg_match('/^[\w_\-]+$/', $user_id) ){
+     require 'database.php';
+     session_start();
+ 
+     $username = $_SESSION['user_id'];
+     if( !preg_match('/^[\w_\-]+$/', $username) ){
         echo "Invalid username";
         exit;
     }
-    //token variable
-    $sestok = $_SESSION["token"];
+    
+     $userprofile = $_POST['username'];
 
-    echo "<h2>You Are Logged In As: </h2>";
-    echo "<form action='userprofile.php' method='Post'>
-                <input type='hidden' name='username' value='$user_id'>
-                <button type='submit' name='useracct' id='useracct'>$user_id</button>
-            </form>";
-//delete user button
-    echo "<form action='deleteuser.php' method='Post'>
-                <input type='hidden' name='token' value='$sestok'/>
-                <button type='submit' name='deleteuser' class='deleteuser'>Delete Your Account</button>
-            </form>";
+     echo "<h1>Welcome to $userprofile 's profile</h1>";
 
-    $stmt = $mysqli->prepare("select * from stories");
+     echo '
+             <form action="main.php" method="Post">
+                 <button type="submit">Return to Main Page</button>
+             </form>';
+
+     $stmt = $mysqli->prepare("select * from stories where username='$userprofile'");
     if(!$stmt){
         printf("Query Prep Failed: %s\n", $mysqli->error);
         exit;
@@ -78,7 +60,7 @@
 
         
 
-        if($user_id == $username){
+        if($username == $userprofile){
             
             echo
                 "<form action='edit.php' method='Post'>
@@ -114,10 +96,8 @@
     
     $stmt->close();
 
-
 ?>
 
 
-
 </body>
-</html>
+<html>

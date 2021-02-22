@@ -3,6 +3,7 @@
 <head>
     <title>Module 3 Group</title>
     <link rel="stylesheet" href="stylesheet.css">
+    <meta charset="UTF-8">
 </head>
 <body>
     <h1> Edit Your Story Here! </h1>
@@ -11,10 +12,6 @@
     require 'database.php';
     session_start();
 
-    // if(!hash_equals($_SESSION['token'], $_POST['token'])){
-    //     die("Request forgery detected");
-    // }
-
     $title = $_POST["titledata"];
     $body = $_POST["bodydata"];
     $link = $_POST["linkdata"];
@@ -22,8 +19,21 @@
     $username = $_SESSION['user_id'];
 
 
+    $title = htmlentities($title);
+    $body = htmlentities($body);
+    $link = htmlentities($link);
+    $username = htmlentities($username);
+
+    
+
+    if( !preg_match('/^[\w_\-]+$/', $username) ){
+        echo "Invalid username";
+        exit;
+    }
+
+
     echo 
-    "<form action='edit.php' method='Post' id='editstory'>
+    "<form action='poststory2.php' method='Post' id='editstory'>
         <input type='hidden' name='token' value='$token'/>
         <label for='title'>Title:</label>
         <input value='$title' type='text' name='title' id ='title'>
@@ -37,37 +47,27 @@
         <button type='submit' id='logout-button'>Post Edit</button>
     </form>";
 
+    echo "<p>Editing this post will delete all current comments. This is because editing will create new content that old comments may not apply to.</p>";
+    
+    $stmt1 = $mysqli->prepare("delete from comments where story_username='$username' && story_title='$title'");
+    if(!$stmt1){
+        printf("Query Prep Failed: %s\n", $mysqli->error);
+        exit;
+    }
 
-        $stmt1 = $mysqli->prepare("delete from stories where username='?' && title='?'");
-        if(!$stmt1){
+    $stmt1->execute();
+     
+    $stmt1->close();
+   
+    $stmt2 = $mysqli->prepare("delete from stories where username='$username' && title='$title'");
+        if(!$stmt2){
             printf("Query Prep Failed: %s\n", $mysqli->error);
             exit;
         }
-        $stmt1->bind_param('ss',  $username, $title);
  
-        $stmt1->execute();
+        $stmt2->execute();
          
-        $stmt1->close();
-
-
-        $stmt = $mysqli->prepare("insert into stories (username, title, body, link) values (?, ?, ?, ?)");
-         if(!$stmt){
-             printf("Query Prep Failed: %s\n", $mysqli->error);
-             exit;
-         }
-         else if (!empty($_POST)){
-             echo "<p>Post successfully created.</p>";
-             echo '
-             <form action="main.php" method="Post">
-                 <button type="submit">Return to Main Page</button>
-             </form>';
-         }
- 
-         $stmt->bind_param('ssss',  $username, $title, $body, $link);
- 
-         $stmt->execute();
-         
-         $stmt->close();
+        $stmt2->close();
     ?>
 
 

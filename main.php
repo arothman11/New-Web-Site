@@ -7,12 +7,14 @@
 </head>
 <body>
     <h1>Welcome To Your News Site<h1>
+        
+     //logout button
     <form action="logout.php" method="Post" id="logout">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <button type="submit" id="logout-button">Log Out</button>
     </form>
 
-    
+    //form to post a story
     <form action="poststory.php" method="Post" id="poststory">
         <input type="hidden" name="token" value="<?php echo $_SESSION['token'];?>" />
         <button type="submit" id="logout-button">Post Story</button>
@@ -26,10 +28,12 @@
     $user_id = (string)$_SESSION['user_id'];
     $user_id = htmlspecialchars($user_id);
 
+    //check username
     if( !preg_match('/^[\w_\-]+$/', $user_id) ){
         echo "Invalid username";
         exit;
     }
+      
     //token variable
     $sestok = $_SESSION["token"];
 
@@ -38,12 +42,14 @@
                 <input type='hidden' name='username' value='$user_id'>
                 <button type='submit' name='useracct' id='useracct'>$user_id</button>
             </form>";
-//delete user button
+        
+    //delete user button
     echo "<form action='deleteuser.php' method='Post'>
                 <input type='hidden' name='token' value='$sestok'/>
                 <button type='submit' name='deleteuser' class='deleteuser'>Delete Your Account</button>
             </form>";
 
+    //query for getting stories
     $stmt = $mysqli->prepare("select * from stories");
     if(!$stmt){
         printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -60,7 +66,7 @@
     $link = htmlentities($link);
 
     
-    
+    //fetching all stories
     while($stmt->fetch()){
         echo "<div class='story'>\n";
         printf(
@@ -77,7 +83,7 @@
         );
 
         
-
+        //if this post was posted by the user that is currently logged in
         if($user_id == $username){
             
             echo
@@ -100,7 +106,8 @@
 
 
         }
-
+        
+        //button for adding or viewing comments
         echo "<form action='comments.php' method='Post'>
                     <input type='hidden' name='titledata' value='$title'></input>
                     <input type='hidden' name='postusername' value='$username'></input>

@@ -11,14 +11,18 @@
      require 'database.php';
      session_start();
  
+     //check username
      $username = $_SESSION['user_id'];
      if( !preg_match('/^[\w_\-]+$/', $username) ){
         echo "Invalid username";
         exit;
     }
     
+    //getting data from form
      $userprofile = $_POST['username'];
-
+    //htmlentities
+    $userprofile = htmlentities('username');
+    
      echo "<h1>Welcome to $userprofile 's profile</h1>";
 
      echo '
@@ -26,6 +30,8 @@
                  <button type="submit">Return to Main Page</button>
              </form>';
 
+    
+    //query for getting stories
      $stmt = $mysqli->prepare("select * from stories where username='$userprofile'");
     if(!$stmt){
         printf("Query Prep Failed: %s\n", $mysqli->error);
@@ -42,7 +48,7 @@
     $link = htmlentities($link);
 
     
-    
+    //fetch stories
     while($stmt->fetch()){
         echo "<div class='story'>\n";
         printf(
@@ -58,10 +64,10 @@
             $username, $username, $title, $body, $link, $link
         );
 
-        
-
+        //if the user profile belongs to the user currently logged in
         if($username == $userprofile){
             
+            //form for editing post
             echo
                 "<form action='edit.php' method='Post'>
                     <input type='hidden' name='titledata' value='$title'></input>
@@ -71,6 +77,7 @@
                     <button type='submit' name='editbtn' class='editbtn'>Edit Post</button>
                 </form>";
             
+            //form for deleting posts
             echo
                 "<form action='deletepost.php' method='Post'>
                     <input type='hidden' name='titledata' value='$title'></input>
@@ -82,7 +89,8 @@
 
 
         }
-
+        
+        //button for writing and viewing comments
         echo "<form action='comments.php' method='Post'>
                     <input type='hidden' name='titledata' value='$title'></input>
                     <input type='hidden' name='postusername' value='$username'></input>

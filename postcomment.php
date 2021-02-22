@@ -14,24 +14,28 @@
     $user_id = $_SESSION['user_id'];
     $user_id = htmlspecialchars($user_id);
 
+    //check token
     if(!hash_equals($_SESSION['token'], $_POST['token'])){
         die("Request forgery detected");
     }
-
+    
+    //check username
     if( !preg_match('/^[\w_\-]+$/', $user_id) ){
         echo "Invalid username";
         exit;
     }
-
+    
+    //getting data from form
     $story_username = $_POST['story_username'];
     $story_title = $_POST['story_title'];
     $comment = $_POST['comment'];
 
+    //htmlentities
     $story_username = htmlentities($story_username);
     $story_title = htmlentities($story_title);
     $comment = htmlentities($comment);
     
- 
+    //query for adding comments
     $stmt = $mysqli->prepare("insert into comments (story_username, your_username, story_title, comment) values (?, ?, ?, ?)");
     if(!$stmt){
         printf("Query Prep Failed: %s\n", $mysqli->error);

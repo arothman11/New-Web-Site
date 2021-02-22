@@ -11,3 +11,4 @@ Creative Portion:
   - Users can click on their own username or other usernames to access a user profile page that shows all of that user's posts, and users can edit and delete their posts from their own user profile page. 
   - Users can edit their post titles and links in addition to the stories.
   - User accounts can be deleted. This will also delete all of the user's posts and comments. 
+  - When a user posts a story, we check to make sure the link it actually a legitimate URL. A post on Piazza said this would count for the creative portion. 

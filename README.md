@@ -13,3 +13,7 @@ After talking to TA's Clay Mudter & Sam Winiarksi, we decided to implement the f
   - Users can edit their post titles and links in addition to the stories.
   - User accounts can be deleted. This will also delete all of the user's posts and comments. 
   - When a user posts a story, we check to make sure the link it actually a legitimate URL. A post on Piazza said this would count for the creative portion. 
+
+
+### Grading
+Full points.
